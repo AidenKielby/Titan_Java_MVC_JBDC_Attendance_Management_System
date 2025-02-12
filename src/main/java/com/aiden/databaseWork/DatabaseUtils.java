@@ -22,7 +22,7 @@ public class DatabaseUtils {
 
             Statement statement = connection.createStatement();
 
-            String sql = "CREATE TABLE " + table.getName() + " (" +
+            String sql = "CREATE TABLE `" + table.getName() + "` (" +
                     "  student_id INT NOT NULL,\n" +
                     "  first_name VARCHAR(50),\n" +
                     "  last_name VARCHAR(50),\n" +
@@ -31,8 +31,6 @@ public class DatabaseUtils {
                     ");";
 
             int rowsAffected = statement.executeUpdate(sql);
-            System.out.println("---------------------------");
-            System.out.println("Rows Affected: " + rowsAffected);
 
             connection.close();
         }
@@ -41,7 +39,7 @@ public class DatabaseUtils {
         }
     }
 
-    public void addToTable(Table table){
+    public void setTableValues(Table table){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -51,13 +49,16 @@ public class DatabaseUtils {
 
             String tableString = table.toString();
 
-            String sql1 = "INSERT INTO " + table.getName() + " (student_id, first_name, last_name, student_present)\n" +
-                    "VALUES\n" + tableString + ";";
-            System.out.println(sql1);
+            String sql1 = "DROP TABLE IF EXISTS `" + table.getName() + "`; \n \n";
 
             int rowsAffected1 = statement.executeUpdate(sql1);
-            System.out.println("---------------------------");
-            System.out.println("Rows Affected: " + rowsAffected1);
+
+            createTable(table);
+
+            String sql2 = "INSERT INTO `" + table.getName() + "` (student_id, first_name, last_name, student_present)\n" +
+                    "VALUES \n" + tableString + ";";
+
+            int rowsAffected2 = statement.executeUpdate(sql2);
 
             connection.close();
         }
@@ -75,7 +76,7 @@ public class DatabaseUtils {
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
 
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from student_attendance." + tableName);
+            ResultSet resultSet = statement.executeQuery("select * from student_attendance.`" + tableName + "`;");
 
             while (resultSet.next()){
 

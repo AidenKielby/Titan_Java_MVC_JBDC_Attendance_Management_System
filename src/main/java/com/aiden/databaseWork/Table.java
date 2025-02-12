@@ -32,7 +32,7 @@ public class Table {
                 rowString = "(" + row.getID() + ", '" + row.getFirstName() + "', '" + row.getLastName() + "', " + row.getIsPresent() + "), \n";
             }
             else {
-                rowString = "(" + row.getID() + ", '" + row.getFirstName() + "', '" + row.getLastName() + "', " + row.getIsPresent() + ");";
+                rowString = "(" + row.getID() + ", '" + row.getFirstName() + "', '" + row.getLastName() + "', " + row.getIsPresent() + ")";
             }
 
             s.append(rowString);
